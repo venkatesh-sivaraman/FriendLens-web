@@ -15,6 +15,41 @@ import json
 
 ### MARK: CF Code
 
+def wait_for_training(person_group_id):
+    """Wait for the finish of person_group training."""
+    idx = 1
+    while True:
+        res = person_group.get_status(person_group_id)
+        if res['status'] in ('succeeded', 'failed'):
+            break
+        print('The training of Person Group {} is onging: #{}'.format(
+            person_group_id, idx))
+        time.sleep(2**idx)
+        idx += 1
+
+
+def clear_face_lists():
+    """[Dangerous] Clear all the face lists and all related persisted data."""
+    face_lists = face_list.lists()
+    time.sleep(TIME_SLEEP)
+    for face_list in face_lists:
+        face_list_id = face_list['faceListId']
+        face_list.delete(face_list_id)
+        print('Deleting Face List {}'.format(face_list_id))
+        time.sleep(TIME_SLEEP)
+
+
+def clear_person_groups():
+    """[Dangerous] Clear all the person gourps and all related persisted data.
+    """
+    person_groups = person_group.lists()
+    time.sleep(TIME_SLEEP)
+    for person_group in person_groups:
+        person_group_id = person_group['personGroupId']
+        person_group.delete(person_group_id)
+        print('Deleting Person Group {}'.format(person_group_id))
+        time.sleep(TIME_SLEEP)
+
 from . import face, face_list, person, person_group
 from .util import *
 
