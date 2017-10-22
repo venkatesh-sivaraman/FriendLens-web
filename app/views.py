@@ -14,7 +14,15 @@ import json
 
 ### MARK: CF Code
 
-import cognitive_face as CF
+try:
+    import cognitive_face as CF
+except:
+    import pip
+
+    def install(package):
+        pip.main(['install', package, '--user'])
+
+    install('cognitive-face')
 
 name_of_group = "kavya_friends_1"
 
