@@ -2,13 +2,34 @@
 Definition of views.
 """
 
+import os
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.template import RequestContext
 from datetime import datetime
+from django import forms
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
+
+def handle_uploaded_file(f):
+    dest_path = os.path.join(settings.MEDIA_ROOT, 'img_1.jpg')
+    with open(dest_path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+    return dest_path
 
 def getimg(request):
-    return HttpResponse(request.META)
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return HttpResponse(dest_path)
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})
 
 def home(request):
     """Renders the home page."""
