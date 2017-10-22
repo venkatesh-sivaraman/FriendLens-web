@@ -21,6 +21,7 @@ def handle_uploaded_file(f):
             destination.write(chunk)
     return dest_path
 
+@csrf_exempt
 def getimg(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -29,7 +30,7 @@ def getimg(request):
             return HttpResponse(dest_path)
     else:
         form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+    return HttpResponse("Don't know what to give you")
 
 def home(request):
     """Renders the home page."""
