@@ -16,11 +16,11 @@ class UploadFileForm(forms.Form):
     file = forms.FileField()
 
 def handle_uploaded_file(f):
-    dest_path = os.path.join(settings.MEDIA_ROOT, 'img_1.jpg')
+    dest_path = os.path.join(settings.MEDIA_ROOT, 'img_1.jpg').replace('\\', '/')
     with open(dest_path, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
-    return dest_path
+    return os.path.join(settings.MEDIA_URL, 'img_1.jpg').replace('\\', '/')
 
 @csrf_exempt
 def getimg(request):
