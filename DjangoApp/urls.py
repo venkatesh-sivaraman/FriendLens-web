@@ -8,6 +8,8 @@ from app.forms import BootstrapAuthenticationForm
 from app.views import *
 from app.models import *
 from django.contrib.auth.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 # Uncomment the next lines to enable the admin:
@@ -39,4 +41,4 @@ urlpatterns = [
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
