@@ -24,6 +24,9 @@ except:
 
     install('cognitive-face')
 
+    import cognitive_face as CF
+
+
 name_of_group = "kavya_friends_1"
 
 fb_ids = [("100008532641869","Venkatesh Sivaraman"),("100006541209232","Karunya Sethuraman"),
