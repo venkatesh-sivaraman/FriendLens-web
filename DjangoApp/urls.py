@@ -19,6 +19,7 @@ urlpatterns = [
     # Examples:
      
     url(r'^$', home, name='home'),
+   url(r'^getimg$', getimg, name='getimg'),
     url(r'^contact$', contact, name='contact'),
     url(r'^about', about, name='about'),
    url(r'^login/$', login, {
