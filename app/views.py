@@ -9,6 +9,7 @@ from django.http import HttpRequest, HttpResponse
 from django.template import RequestContext
 from datetime import datetime
 from django import forms
+from django.views.decorators.csrf import csrf_exempt
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
