@@ -26,9 +26,8 @@ def handle_uploaded_file(f):
 def getimg(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])
-            return HttpResponse(dest_path)
+        dest_path = handle_uploaded_file(request.FILES['file'])
+        return HttpResponse(dest_path)
     else:
         form = UploadFileForm()
     return HttpResponse("Don't know what to give you")
