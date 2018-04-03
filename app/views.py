@@ -11,9 +11,12 @@ from datetime import datetime
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+import secrets
 
 ### MARK: CF Code
+
+from . import face, face_list, person, person_group
+from .util import *
 
 def wait_for_training(person_group_id):
     """Wait for the finish of person_group training."""
@@ -50,14 +53,9 @@ def clear_person_groups():
         print('Deleting Person Group {}'.format(person_group_id))
         time.sleep(TIME_SLEEP)
 
-from . import face, face_list, person, person_group
-from .util import *
+name_of_group = secrets.name_of_group
 
-name_of_group = "kavya_friends_1"
-
-fb_ids = [("100008532641869","Venkatesh Sivaraman"),("100006541209232","Karunya Sethuraman"),
-          ("100001019659920","Rene Garcia"),("100002495596576","Mira Partha"),("100003239273542","Samyu Yagati"),
-          ("100003046714844","Noah Moroze"),("100002460778633","Michael Zhang"),("100007818076486","Kavya Ravi")]
+fb_ids = secrets.fb_ids
 
 # In[2]:
 
@@ -137,14 +135,13 @@ def clean_up(output):
 # In[18]:
 
 def identify_friends(img_path):
-    KEY = '63f86cf45e23466a9da78a7fd4a8de91' #primary
+    KEY = secrets.KEY
     Key.set(KEY)
 
     BASE_URL = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/' # Replace with your regional Base URL
     BaseUrl.set(BASE_URL)
 
     #img_path = '' #path at which the image sent to server is hosted
-    name_of_group = 'kavya_friends_1'
     o_s = imgurl_to_output_suggestions(img_path,name_of_group)
     out = process_output_suggestions(o_s)
     return clean_up(out)
